@@ -6,7 +6,6 @@
  * 25/03/2019
  */
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -54,23 +53,25 @@ public class Main {
                         );
 
                         lines.forEach(line -> {
-                            String[] parts = line.toUpperCase().replace(", ", ",").split(",");
+                            String[] information = line.toUpperCase().split(",");
 
-                            if (parts.length == 3) {
-                                String nombre = parts[0];
-                                String sintomas = parts[1];
-                                String prioridad = parts[2];
+                            if (information.length == 3) {
+                                String nombre = information[0];
+                                String sintoma = information[1];
+                                String prioridad = information[2];
 
-                                Paciente newPatient = new Paciente(nombre, sintomas, prioridad);
-                                patientsQueue.add(newPatient);
+                                Paciente newPaciente = new Paciente(nombre, sintoma, prioridad);
+                                patientsQueue.add(newPaciente);
                             }
-
                         });
+
+                        // Ordenar los pacientes de acuerdo con su prioridad
+
 
                         System.out.println(" Los pacientes se han agregado con éxito" );
                     }
 
-                    catch (IOException e) {
+                    catch (Exception e) {
                         System.out.println(" No se han encontrado pacientes! ");
                     }
 
@@ -93,12 +94,34 @@ public class Main {
                                 // Atender al paciente de mayor priorida, al atender el paciente desplegar mensaje diciendo:
                                 // "El paciente " + name + " se ha tratado su " + sympton + " de prioridad " + priority + " se ha tratado con éxito"
                                 // después de atenderlo, sacarlo de la queue del hospital
+                                boolean wantstoTreat = true;
 
-                                break;
+                                while(wantstoTreat) {
+
+                                    if (!patientsQueue.isEmpty()) {
+                                        Paciente treated = patientsQueue.remove();
+                                        System.out.println("El paciente " + treated.getName() + " ha sido tratado de " + treated.getSymptoms() + " de prioridad " + treated.getPriority() + " exitosamente");
+                                    } else {
+                                        System.out.println(" La lista de pacientes se encuentra vacía!");
+                                    }
+
+                                    wantstoTreat = false;
+                                }
+
+                            break;
 
                             // Opción para ver la lista de pacients en la lista de espera
                             case 2:
                                 // Imprimir la queue con el formato Pacientes.toString(), en orden de su prioridad
+                                while (!patientsQueue.isEmpty()) {
+                                    Paciente patient = patientsQueue.getFirst();
+                                    System.out.println(patient.toString());
+                                }
+
+                                if (patientsQueue.isEmpty()) {
+                                    System.out.println(" La lista de pacientes se encuentra vacía!");
+                                }
+
                                 break;
 
                             case 3:

@@ -1,3 +1,7 @@
+/*
+ * Code used from the 7th Edition from Java Structures
+ */
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import java.util.PriorityQueue;
@@ -13,6 +17,9 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         data = new Vector<E>();
     }
 
+    /**
+     * @param v is a vector that will be converted on a VectorHeap, type Vector<E>
+     */
     public VectorHeap(@NotNull Vector<E> v)
     // post: constructs a new priority queue from an unordered vector
     {
@@ -23,6 +30,11 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         }
     }
 
+    /**
+     * @param i the index of the position, the type is int. The position can´t be greater than
+     *          0 and lesser than the size of the size.
+     * @return the position of the parent of the node at the location i
+     */
     @Contract(pure = true)
     public static int parent(int i)
     // pre: 0 <= i < size
@@ -31,6 +43,11 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return (i - 1) / 2;
     }
 
+    /**
+     * @param i the index of the position, the type is int. The position can´t be greater than
+     *          0 and lesser than the size of the size.
+     * @return the position of the left child at the location i
+     */
     @Contract(pure = true)
     public static int left(int i)
     // pre: 0 <= i < size
@@ -39,6 +56,11 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return 2 * i + 1;
     }
 
+    /**
+     * @param i the index of the position, the type is int. The position can´t be greater than
+     *          0 and lesser than the size of the size.
+     * @return the position of the right child at the location i
+     */
     @Contract(pure = true)
     public static int right(int i)
     // pre: 0 <= i < size
@@ -47,6 +69,10 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return (2 * i + 1) + 1;
     }
 
+    /**
+     * @param leaf The number of the leaf inside the Vector, has to be int. The value of the leaf
+     *             has to be greater than 0 and lesser than the size of the Vector.
+     */
     public void percolateUp(int leaf)
     // pre: 0 <= leaf < size
     // post: moves node at index leaf up to appropriate position
@@ -62,6 +88,11 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         data.set(leaf, value);
     }
 
+    /**
+     * @param value The value of any type that wants to be added to de Vector, the type can´t
+     *              be null
+     */
+    @Override
     public void add(E value)
     // pre: value is non-null comparable
     // post: value is added to priority queue
@@ -95,6 +126,10 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
 
     }
 
+    /**
+     * @param root the position of the root in where it is, type int. Has
+     *             to be greater than 0 and lesser than the size of the Vector
+     */
     protected void pushDownRoot(int root)
     // pre: 0 <= root < size
     // post: moves node at index root down
@@ -134,6 +169,11 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return data.firstElement();
     }
 
+    /**
+     * @return The value with the highest priority
+     * Removes the item with the highest priority
+     */
+    @Override
     public E remove()
     // pre: !isEmpty()
     // post: returns and removes minimum value from queue
