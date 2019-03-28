@@ -1,5 +1,5 @@
 import org.jetbrains.annotations.Contract;
-
+import org.jetbrains.annotations.NotNull;
 import java.util.PriorityQueue;
 import java.util.Vector;
 
@@ -13,7 +13,7 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         data = new Vector<E>();
     }
 
-    public VectorHeap(Vector<E> v)
+    public VectorHeap(@NotNull Vector<E> v)
     // post: constructs a new priority queue from an unordered vector
     {
         int i;
@@ -23,6 +23,7 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         }
     }
 
+    @Contract(pure = true)
     public static int parent(int i)
     // pre: 0 <= i < size
     // post: returns parent of node at location i
@@ -30,6 +31,7 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return (i - 1) / 2;
     }
 
+    @Contract(pure = true)
     public static int left(int i)
     // pre: 0 <= i < size
     // post: returns index of left child of node at location i
@@ -37,6 +39,7 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         return 2 * i + 1;
     }
 
+    @Contract(pure = true)
     public static int right(int i)
     // pre: 0 <= i < size
     // post: returns index of right child of node at location i
@@ -67,16 +70,25 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         percolateUp(data.size() - 1);
     }
 
+    /**
+     * @return true if the Vector is empty, false if it doesn´t
+     */
     @Override
     public boolean isEmpty() {
         return data.isEmpty();
     }
 
+    /**
+     * @return The size of the Vector
+     */
     @Override
     public int size() {
         return data.size();
     }
 
+    /**
+     * clears the Vector
+     */
     @Override
     public void clear() {
         data.clear();
@@ -114,6 +126,9 @@ public class VectorHeap<E extends Comparable<E>> implements iPriorityQueue<E> {
         }
     }
 
+    /*
+     * @return the first element of the Vector
+     */
     @Override
     public E getFirst() {
         return data.firstElement();
