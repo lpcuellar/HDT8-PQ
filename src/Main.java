@@ -6,6 +6,9 @@
  * 25/03/2019
  */
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,9 +17,10 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner input = new Scanner(System.in);
         VectorHeap<Paciente> patientsQueue = new VectorHeap<>();
+        VectorHeap<Paciente> patientsList = new VectorHeap<>();
 
         String mainMenu = "     --- EMERGENCIA --- \n" +
                 "\t 1. Ingresar pacientes a la sala de emergencia\n" +
@@ -42,7 +46,7 @@ public class Main {
                 // Opcion para ingresar pacientes a la lista
                 case 1:
                     // Leer el archivo .txt
-                    System.out.print("Ingrese el archivo de texto que desea procesar: ");
+                    System.out.print("Ingrese el archivo de texto que desea leer: ");
                     String userFile = input.nextLine();
                     userFile = input.nextLine();
 
@@ -62,11 +66,9 @@ public class Main {
 
                                 Paciente newPaciente = new Paciente(nombre, sintoma, prioridad);
                                 patientsQueue.add(newPaciente);
+                                patientsList.add(newPaciente);
                             }
                         });
-
-                        // Ordenar los pacientes de acuerdo con su prioridad
-
 
                         System.out.println(" Los pacientes se han agregado con éxito" );
                     }
@@ -110,15 +112,15 @@ public class Main {
 
                             break;
 
-                            // Opción para ver la lista de pacients en la lista de espera
+                            // Opción para ver la lista de pacientes en espera
                             case 2:
                                 // Imprimir la queue con el formato Pacientes.toString(), en orden de su prioridad
-                                while (!patientsQueue.isEmpty()) {
-                                    Paciente patient = patientsQueue.getFirst();
-                                    System.out.println(patient.toString());
-                                }
-
-                                if (patientsQueue.isEmpty()) {
+                                if (!patientsList.isEmpty()) {
+                                    while (!patientsList.isEmpty()){
+                                        Paciente patient = patientsList.remove();
+                                        System.out.println(patient.toString());
+                                    }
+                                } else {
                                     System.out.println(" La lista de pacientes se encuentra vacía!");
                                 }
 

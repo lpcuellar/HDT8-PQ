@@ -47,7 +47,7 @@ public class Paciente implements Comparable<Paciente> {
      * @return The attributes of the patient in a format that looks kinda nice
      */
     public String toString() {
-        return "    Nombre: " + name + "\n" +
+        return "     Nombre: " + name + "\n" +
                 "\t Síntomas: " + symptoms + "\n" +
                 "\t Prioridad; " + priority + "\n" +
                 "\t ";
